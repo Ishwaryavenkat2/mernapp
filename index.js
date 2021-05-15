@@ -1,20 +1,19 @@
-const express = require('express')
-const app = express()
+var express = require("express");
+var app = express()
+var bodyParser = require("body-parser");
+var router = require("./routes")
+
+app.use(bodyParser.json())
+app.use(bodyParser.urlencoded({ extended: false }));
+
+//SERVER CONNECTION
+// app.listen(8000);
+
 const port = 5000
-
-const mongoose = require('mongoose')
-
-app.get('/', (req, res) => {
-  // res.send('Hello World!')
-  res.sendFile(__dirname + '/eghtm.html')
- 
-})
-//mongo connection
-mongoose.connect('mongodb://localhost:27017/Modecrud', (err) => {
-  if (err) return console.error(err)
-  console.log('Connected to Database')
-})
-
 app.listen(port, () => {
   console.log(`Example app listening at http://localhost:${port}`)
 })
+// ROUTE
+app.use("/", router);
+app.use("/employee", require("./routes"));
+
